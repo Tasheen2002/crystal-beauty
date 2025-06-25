@@ -1,0 +1,11 @@
+import express from "express";
+import mongoose from "mongoose";
+
+const productSchema = mongoose.Schema({
+  name: String,
+  price: Number,
+  description: String,
+});
+
+const Product = mongoose.model("product", productSchema);
+export default Product;
