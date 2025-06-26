@@ -9,6 +9,22 @@ export function getProducts(req, res) {
 }
 
 export function createProducts(req, res) {
+  console.log(req.user);
+  
+  if(req.user==null){
+    res.json({
+      message:"You are not logged in"
+    })
+    return
+  }
+
+  if(req.user.type!="admin"){
+    res.json({
+      message:"You are not admin"
+    })
+    return
+  }
+
   const product = new Product(req.body);
   product.save().then(() => {
     res.json({
