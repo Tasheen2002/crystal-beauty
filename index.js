@@ -26,10 +26,12 @@ app.use((req, res, next) => {
   if (token != null) {
     jwt.verify(token, "tash-secret-key-2002", (error, decoded) => {
       if (!error) {
-        console.log(decoded);
+        // console.log(decoded);
+        req.user=decoded;
       }
     });
   }
+  next();
 });
 
 app.use("/api/students", studentRouter);
