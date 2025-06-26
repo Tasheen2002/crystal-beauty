@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import studentRouter from "./routes/studentRouter.js";
 import productRouter from "./routes/productRouter.js";
 import userRouter from "./routes/userRouter.js";
+import jwt from "jsonwebtoken";
 
 const mongoURL =
   "mongodb+srv://tasheen:JackCM%403003@cluster0.0ldrk4b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -18,6 +19,18 @@ connection.once("open", () => {
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  const token = req.header("authorization")?.replace("Bearer ", "");
+  console.log(token);
+  if (token != null) {
+    jwt.verify(token, "tash-secret-key-2002", (error, decoded) => {
+      if (!error) {
+        console.log(decoded);
+      }
+    });
+  }
+});
 
 app.use("/api/students", studentRouter);
 app.use("/api/products", productRouter);
